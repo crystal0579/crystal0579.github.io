@@ -6,6 +6,7 @@ enviorment
 以windows为例， 它可以在操作环境变量里设置
 也可以在 eclipse 里设置， 即 enviroment里设置，当然只有在eclipse启动才有效果， 但是项目容器绝对不能是, 某类的jvm 的main, 可以是tomcat等
 
+如果无效， 请看自己是否有设置环境变量的权限。
 二。
 argument
 它是jvm级别的， 只有在相关的jvm启动时才有效果， 需要我们在项目启动时设置相关的参数
