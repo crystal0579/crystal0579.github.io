@@ -12,4 +12,4 @@ argument
 可以是外部命令式 java -Dxxx=“xxx”
 也可以在eclipse里的vm arguments里以 -D的方式设置
 
-
+与上的读取方式相同。
