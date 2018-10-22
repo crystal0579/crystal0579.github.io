@@ -1,0 +1,95 @@
+一、主要区别
+**
+**
+1、二者最大的区别是：
+
+1).函数（function）总是向调用者返回数据，并且一般只返回一个值；
+2).存储过程（procedure）不直接返回数据，但可以改变输出参数的值，这可以近似看作能返回值，且存储过程输出参数的值个数没有限制。
+从一般应用上来看，如果不需要返回值或者需要多个返回值，使用存储过程，如果只用一个返回值，就使用函数。
+
+2、function定义中只能有DDL（如select等）语句；procedure中主要是DML语句（对数据库进行复杂操作时,如对多个表进行Update、Insert、Query、Delete时）。
+
+如果想要使用select的结果集，则要使用游标
+
+**
+以下需要注意的地方是：
+
+1).定义函数或者存储过程时，IN/OUT表示调用函数时，传进来或传出去的参数。如果没有说明in/out，则默认为in；
+2).定义的函数必须要有return子句，其后紧跟着返回值得类型；
+3).实际调用函数或存储过程时，在declare中声明的变量至少应该对应创建的函数或存储过程中的OUT参数和return参数合起来的个数；
+4).可以建立不带参数（即没有返回的参数）、没有变量的存储过程。
+**
+**
+
+5)执行方式略有不同，存储过程的执行方式有两种（1.使用execute2.使用begin和end），函数除了存储过程的两种方式外，还可以当做表达式使用，例如放在select中（select f1() form dual;）。
+3、存储过程的命名最好以proc_打头，函数则是func_打头，变量则应该用v_打头。
+
+1、函数
+（1）创建函数
+create or replace function get_salary（
+    dept_no number,
+    emp_count **out** number)
+    return number IS
+    v_sum number;
+begin
+    ...
+exception
+    ...
+end get_salary
+
+（2）调用函数
+declare 
+    v_num number;
+    v_sum number;
+begin
+    ...（这里应该出现函数名表示调用）
+end
+
+
+2、存储过程
+（1）创建存储过程
+create or replace procedure pro_demo(
+    dept_no number default 10,
+    sal_sum out number,
+    emp_count out number)
+IS
+begin
+    ...
+exception
+    ...
+end proc_demo;
+
+（2）调用存储过程
+调用语法：
+
+1)、exec <过程名>;
+
+2)、execute <过程名>;
+
+3)、在PL/SQL语句块中直接调用。
+例如：    
+declare
+    v_num number;
+    v_sum number(8,2);
+begin
+    procedure pro_demo(dept_no=>1,sal_num=>900,emp_count=>10)（这里出现存储过程名表示调用，传递参数值用=>）
+end;
+
+3、本地存储过程
+在PL/SQL中还可以在declare块中建立本地存储过程，而不使用关键字create，其目的是：不用将存储过程存储在数据库中，避免更改数据库时带来的麻烦，其主要的使用场景是，临时使用某个存储过程，而不是在以后要重复多次使用。
+
+例子：
+declare
+    v_num number;
+    v_sum number(8,2);
+procedure proc_demo(
+    dept_no number default 10,
+    sal_sum out number,
+    emp_count out number)
+IS
+begin
+    ...（这里不用出现存储过程名）
+exception
+    ...
+end proc_demo;
+![just for image](https://crystal0579.github.io/images/procedure_function.png)
