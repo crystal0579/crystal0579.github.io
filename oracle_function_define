@@ -82,3 +82,48 @@ drop function [schema.]functionName;
 3.存储过程可以重复使用,可减少数据库开发人员的工作量。
 
 4.安全性高,可设定只有某用户才具有对指定存储过程的使用权。
+
+procedure demo:
+  PROCEDURE main(p_file_id     IN INTEGER,
+                 p_template_cd IN gbk_file_template.template_cd%TYPE,
+                 p_result      OUT VARCHAR2) IS
+    l_cnt NUMBER;
+    e_invalid EXCEPTION;
+  BEGIN
+    SELECT COUNT(1) INTO l_cnt FROM gbk_file WHERE file_id = p_file_id;
+
+    IF NVL(l_cnt, 0) != 1 THEN
+      p_result := 'Invalid File ID=' || p_file_id;
+      RAISE e_invalid;
+    END IF;
+
+    CASE p_template_cd
+      WHEN 'T1' THEN
+        template_T1(p_file_id, p_result);
+      WHEN 'T2' THEN
+        template_T2(p_file_id, p_result);
+      WHEN 'T3' THEN
+        template_T3(p_file_id, p_result);
+      WHEN 'T4' THEN
+        template_T4(p_file_id, p_result);
+      WHEN 'T5' THEN
+        template_T5(p_file_id, p_result);
+      WHEN 'T6' THEN
+        template_T6(p_file_id, p_result);
+      WHEN 'T7' THEN
+        template_T7(p_file_id, p_result);
+      WHEN 'T8' THEN
+        template_T8(p_file_id, p_result);
+      WHEN 'T9' THEN
+        template_T9(p_file_id, p_result);
+    END CASE;
+
+    COMMIT;
+  EXCEPTION
+    WHEN e_invalid THEN
+      RAISE;
+    WHEN OTHERS THEN
+      p_result := SUBSTR(SQLERRM, 1, 200);
+  END main;
+END;
+
