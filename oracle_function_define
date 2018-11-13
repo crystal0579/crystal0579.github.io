@@ -127,3 +127,7 @@ procedure demo:
   END main;
 END;
 
+在数据库的过程中EXCEPTION是专门用来处理异常的，sqlcode和sqlerrm是用来获取异常代码和错误提示信息的。数据库有它自带的系统内部异常，当然你也可以自定义异常， 
+raise是用来抛出异常的 
+
+raise application error是将应用程序专有的错误从服务器端转达到客户端应用程序 
