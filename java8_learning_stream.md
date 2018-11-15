@@ -13,14 +13,17 @@ Stream 的一大特点是，数据源本身可以是无限的.
 Collection.stream()
 Collection.parallelStream()
 Arrays.stream(T array) or Stream.of()
+
 二。从 BufferedReader
 java.io.BufferedReader.lines()
 
 三。静态工厂
 java.util.stream.IntStream.range()
 java.nio.file.Files.walk()
+
 四。自己构建
 java.util.Spliterator
+
 五。其它
 Random.ints()
 BitSet.stream()
